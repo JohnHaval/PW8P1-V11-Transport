@@ -102,8 +102,8 @@ namespace Transports
         /// </summary>
         public virtual void RestoreTransport()
         {
-            Control = _oldControl;
             IsCrashed = false;
+            Control = _oldControl;
         }
         /// <summary>
         /// Снимает или надевает (дословно) зимнюю резину

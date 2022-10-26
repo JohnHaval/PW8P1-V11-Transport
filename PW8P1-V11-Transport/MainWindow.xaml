@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PW8P1_V11_Transport"
         mc:Ignorable="d"
-        Title="PW8-ClassWork" MinHeight="450" MinWidth="700" SizeToContent="WidthAndHeight" FontSize="14">
+        Title="PW8-ClassWork" MinHeight="550" MinWidth="790" Height="550" Width="790" FontSize="14">
     <DockPanel>
         <GroupBox Header="Транспорт.cs - (Предок)">
             <StackPanel Orientation="Horizontal">
@@ -16,7 +16,7 @@
                         <Label Content="Мощность"/>
                         <TextBox x:Name="Power" Margin="3" MaxLength="5"/>
                         <Label Content="Компания"/>
-                        <TextBox x:Name="Company" Margin="3" MaxLength="5"/>
+                        <TextBox x:Name="Company" Margin="3" MaxLength="25"/>
                         <CheckBox x:Name="SetCrash" Content="Сломан" ToolTip="Позволяет пометить машину как сломанную (есть зависимости)" Margin="3" Click="SetCrash_Click"/>
                         <CheckBox x:Name="SetWinterTires" Content="Зимние шины" ToolTip="Позволяет установить или снять зимние шины" Margin="3"/>
                         <TextBlock Text="Управляемость" Margin="3"/>
@@ -85,71 +85,97 @@
         </TabControl>
         </GroupBox>
         <GroupBox Header="Транспорты">
-            <ListView x:Name="TransportList" MinWidth="200">
+            <ListView x:Name="TransportList">
                 <ListView.ItemTemplate>
                     <ItemContainerTemplate>
+                        <GroupBox FontSize="10">
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Макс. скорость:"/>
-                                <TextBlock Text="{Binding MaxSpeed}"/>
+                            <GroupBox Header="ТранспортCS">
+                                <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="Макс. скорость:"/>
+                                                <TextBlock Text="{Binding MaxSpeed}"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text=" Мощность:"/>
+                                                <TextBlock Text="{Binding Power}"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text=" Компания:"/>
+                                                <TextBlock Text="{Binding Company}"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="Поломано:"/>
+                                            <TextBlock Text="{Binding IsCrashed}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text=" Зимние шины:"/>
+                                            <TextBlock Text="{Binding IsWinterTires}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Управляемость:"/>
+                                        <TextBlock Text="{Binding Control}"/>
+                                    </StackPanel>
+                                    </StackPanel>
+                                </GroupBox>
+                                <GroupBox Header="ЛегковойCS">
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Класс-комфорт:"/>
+                                            <TextBlock Text="{Binding Comfort}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text=" Есть владелец:"/>
+                                            <TextBlock Text="{Binding HasOwner}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </GroupBox>
+                                <GroupBox Header="ГрузовикCS">
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Макс.место:"/>
+                                            <TextBlock Text="{Binding MaxSpace}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text=" Тек.место:"/>
+                                            <TextBlock Text="{Binding CurrentSpace}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text=" Своб.место:"/>
+                                            <TextBlock Text="{Binding FreeSpace}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </GroupBox>
+                                <GroupBox Header="АвтобусCS">
+                                    <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="Макс.пасажиров:"/>
+                                            <TextBlock Text="{Binding MaxPassengers}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text=" Тек.кол-во:"/>
+                                            <TextBlock Text="{Binding CurrentPassengers}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text=" Своб.места:"/>
+                                            <TextBlock Text="{Binding FreePlaces}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Является электробусом:"/>
+                                            <TextBlock Text="{Binding IsElectroBus}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </GroupBox>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Мощность"/>
-                                <TextBlock Text="{Binding Power}"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Компания"/>
-                                <TextBlock Text="{Binding Company}"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Поломано:"/>
-                                <TextBlock Text="{Binding IsCrashed}"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Зимние шины:"/>
-                                <TextBlock Text="{Binding IsWinterTires}"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Управляемость"/>
-                                <TextBlock Text="{Binding Control}"/>
-                            </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="Класс-комфорт"/>
-                                    <TextBlock Text="{Binding Comfort}"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="Есть владелец"/>
-                                    <TextBlock Text="{Binding HasOwner}"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="Макс.место"/>
-                                    <TextBlock Text="{Binding MaxSpace}"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="Тек.место"/>
-                                    <TextBlock Text="{Binding CurrentSpace}"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="Своб.место"/>
-                                    <TextBlock Text="{Binding FreeSpace}"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="Макс.пасажиров"/>
-                                    <TextBlock Text="{Binding MaxPassengers}"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="Тек.кол-во"/>
-                                    <TextBlock Text="{Binding CurrentPassengers}"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="Своб.места"/>
-                                    <TextBlock Text="{Binding FreePlaces}"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="Является электробусом"/>
-                                    <TextBlock Text="{Binding IsElectroBus}"/>
-                                </StackPanel>
-                        </StackPanel>
+                            </ScrollViewer>
+                        </GroupBox>
                     </ItemContainerTemplate>
                 </ListView.ItemTemplate>
             </ListView>

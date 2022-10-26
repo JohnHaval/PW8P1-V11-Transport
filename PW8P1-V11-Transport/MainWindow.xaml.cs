@@ -51,6 +51,8 @@ namespace PW8P1_V11_Transport
         }
         private void AddTransport_Click(object sender, RoutedEventArgs e)
         {
+            if (ComfortSelector.SelectedIndex == -1 || ControlSelector.SelectedIndex == -1)
+                MessageBox.Show("Выберите класс-комфорт и управляемость для авто перед добавлением!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             GoCreating();
         }        
         private void GoCreating()
