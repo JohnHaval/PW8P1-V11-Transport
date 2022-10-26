@@ -140,7 +140,8 @@ namespace PW8P1_V11_Transport
             bus.IsCrashed = (bool)SetCrash.IsChecked;
             bus.WinterTiresSetup((bool)SetWinterTires.IsChecked);
             bus.MaxPassengers = Convert.ToInt32(MaxPassengers.Text);
-            bus.ElectroBusSetup((bool)SetElectroBus.IsChecked);
+                bus.CurrentPassengers = Convert.ToInt32(Passengers.Value);
+                bus.ElectroBusSetup((bool)SetElectroBus.IsChecked);
             MainBus = bus;
             TransportList.Items.Add(bus);
             }
@@ -159,7 +160,8 @@ namespace PW8P1_V11_Transport
             truck.Control = MainCar.Control;
             truck.IsCrashed = (bool)SetCrash.IsChecked;
             truck.WinterTiresSetup((bool)SetWinterTires.IsChecked);
-            truck.MaxSpace = Convert.ToInt32(MaxPassengers.Text);
+            truck.MaxSpace = Convert.ToInt32(MaxSpace.Text);
+            truck.CurrentSpace = Convert.ToInt32(Space.Value);
             MainTruck = truck;
             TransportList.Items.Add(truck);
             }
@@ -214,12 +216,26 @@ namespace PW8P1_V11_Transport
 
         private void MaxSpace_TextChanged(object sender, TextChangedEventArgs e)
         {
-            MaxOfSpace.Text = MainTruck.GetMaxSpace().ToString();
+            try 
+            {
+                MainTruck.MaxSpace = Convert.ToInt32(MaxSpace.Text);
+                MaxOfSpace.Text = MainTruck.GetMaxSpace().ToString();
+                Space.Maximum = MainTruck.GetMaxSpace();
+                FreeSpace.Text = MainTruck.FreeSpace.ToString();
+            }
+            catch { }
         }
 
         private void MaxPassengers_TextChanged(object sender, TextChangedEventArgs e)
         {
-            MaxOfPassengers.Text = MainBus.MaxPassengers.ToString();
+            try 
+            {
+                MainBus.MaxPassengers = Convert.ToInt32(MaxPassengers.Text);
+                MaxOfPassengers.Text = MainBus.MaxPassengers.ToString();
+                Passengers.Maximum = MainBus.MaxPassengers;
+                FreePlaces.Text = MainBus.FreePlaces.ToString();
+            }
+            catch { }
         }
 
         private void Passengers_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

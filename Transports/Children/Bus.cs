@@ -15,7 +15,7 @@ namespace Transports.Children
             {
                 if (MoreThenFree(value) == true) throw new Exception("Мест не хватает на такое количество пассажиров");
                 if (value < 0) throw new Exception("Текущее количество пассажиров не может быть равно 0");
-                FreePlaces = MaxPassengers - _currentPassengers;
+                FreePlaces = MaxPassengers - value;
                 _currentPassengers = value;
             }
         }
