@@ -27,10 +27,10 @@ namespace PW8P1_V11_Transport
             InitializeComponent();
             FillComboBoxes();
         }
-        Transport MainTranport;
-        Car MainCar;
-        Bus MainBus;
-        Truck MainTruck;
+        Transport MainTranport = new Transport();
+        Car MainCar = new Car();
+        Bus MainBus = new Bus();
+        Truck MainTruck = new Truck();
         private void FillComboBoxes()
         {
             List<Transport.TransportControl> transportControls = new List<Transport.TransportControl>()
