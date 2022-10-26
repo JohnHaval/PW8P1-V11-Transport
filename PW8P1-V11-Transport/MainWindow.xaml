@@ -1,0 +1,158 @@
+﻿<Window x:Class="PW8P1_V11_Transport.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PW8P1_V11_Transport"
+        mc:Ignorable="d"
+        Title="PW8-ClassWork" MinHeight="450" MinWidth="700" SizeToContent="WidthAndHeight" FontSize="14">
+    <DockPanel>
+        <GroupBox Header="Транспорт.cs - (Предок)">
+            <StackPanel Orientation="Horizontal">
+                <GroupBox Header="Характеристики траспорта">
+                    <StackPanel>
+                        <Label Content="Макс. скорость"/>
+                        <TextBox x:Name="MaxSpeed" Margin="3" MaxLength="5"/>
+                        <Label Content="Мощность"/>
+                        <TextBox x:Name="Power" Margin="3" MaxLength="5"/>
+                        <Label Content="Компания"/>
+                        <TextBox x:Name="Company" Margin="3" MaxLength="5"/>
+                        <CheckBox x:Name="SetCrash" Content="Сломан" ToolTip="Позволяет пометить машину как сломанную (есть зависимости)" Margin="3" Click="SetCrash_Click"/>
+                        <CheckBox x:Name="SetWinterTires" Content="Зимние шины" ToolTip="Позволяет установить или снять зимние шины" Margin="3"/>
+                        <TextBlock Text="Управляемость" Margin="3"/>
+                        <ComboBox x:Name="ControlSelector" Margin="3"/>
+                        <GroupBox Header="Фиксация транспорта">
+                            <StackPanel>
+                                <Button x:Name="AddTransport" Content="Добавить" Margin="3" Click="AddTransport_Click"/>
+                                <Button x:Name="Clear" Content="Очистить" Margin="3" Click="Clear_Click"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="Выбор класса">
+                            <StackPanel>
+                                <RadioButton x:Name="TransportCS" IsChecked="True" Content="Транспорт" GroupName="Classes"/>
+                                <RadioButton x:Name="CarCS" Content="Автомобиль легковой" GroupName="Classes"/>
+                                <RadioButton x:Name="TruckCS" Content="Грузовик" GroupName="Classes"/>
+                                <RadioButton x:Name="BusCS" Content="Автобус" GroupName="Classes"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="Производные предка">
+        <TabControl>
+            <TabItem Header="Автомобиль.cs">
+                <StackPanel>
+                    <Label Content="Класс-комфорт"/>
+                    <ComboBox x:Name="ComfortSelector" Margin="3"/>
+                    <CheckBox x:Name="SetOwner" Content="Есть владелец" Margin="3"/>
+                    <Button x:Name="SetDeathCarSituation" Content="Смертельная дорожная ситуация" Margin="3" Click="SetDeathCarSituation_Click"/>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Грузовик.cs">
+                <StackPanel>
+                    <Label Content="Максимальная вместимость" Margin="3"/>
+                        <TextBox x:Name="MaxSpace" Margin="3" MaxLength="5" TextChanged="MaxSpace_TextChanged"/>
+                    <StackPanel Orientation="Horizontal" ToolTip="Показывает соотношение занятой относительно максимума">
+                        <TextBlock Text="Текущая вместимость: "/>
+                        <TextBlock x:Name="HoldedSpace" Text="0"/>
+                        <TextBlock Text="/"/>
+                        <TextBlock x:Name="MaxOfSpace" Text="0"/>
+                    </StackPanel>
+                    <Slider x:Name="Space" Value="0" Maximum="0" ToolTip="Зависит от максимальной вместимости" ValueChanged="Space_ValueChanged"/>
+                    <Label Content="Свободное место" Margin="3"/>
+                    <TextBox x:Name="FreeSpace" IsReadOnly="True" Margin="3"/>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Автобус.cs">
+                <StackPanel>
+                    <StackPanel>
+                        <Label Content="Максимальная вместимость" Margin="3"/>
+                            <TextBox x:Name="MaxPassengers" Margin="3" MaxLength="5" TextChanged="MaxPassengers_TextChanged"/>
+                        <StackPanel Orientation="Horizontal" ToolTip="Показывает соотношение занятого места относительно максимума">
+                            <TextBlock Text="Текущая вместимость: "/>
+                            <TextBlock x:Name="CurrentPassengers" Text="0"/>
+                            <TextBlock Text="/"/>
+                            <TextBlock x:Name="MaxOfPassengers" Text="0"/>
+                        </StackPanel>
+                        <Slider x:Name="Passengers" Value="0" Maximum="0" ToolTip="Зависит от максимальной вместимости" ValueChanged="Passengers_ValueChanged"/>
+                        <Label Content="Свободное место" Margin="3"/>
+                        <TextBox x:Name="FreePlaces" IsReadOnly="True" Margin="3"/>
+                        <CheckBox x:Name="SetElectroBus" Content="Является электробусом"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+        </GroupBox>
+        <GroupBox Header="Транспорты">
+            <ListView x:Name="TransportList" MinWidth="200">
+                <ListView.ItemTemplate>
+                    <ItemContainerTemplate>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Макс. скорость:"/>
+                                <TextBlock Text="{Binding MaxSpeed}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Мощность"/>
+                                <TextBlock Text="{Binding Power}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Компания"/>
+                                <TextBlock Text="{Binding Company}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Поломано:"/>
+                                <TextBlock Text="{Binding IsCrashed}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Зимние шины:"/>
+                                <TextBlock Text="{Binding IsWinterTires}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Управляемость"/>
+                                <TextBlock Text="{Binding Control}"/>
+                            </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Класс-комфорт"/>
+                                    <TextBlock Text="{Binding Comfort}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Есть владелец"/>
+                                    <TextBlock Text="{Binding HasOwner}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Макс.место"/>
+                                    <TextBlock Text="{Binding MaxSpace}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Тек.место"/>
+                                    <TextBlock Text="{Binding CurrentSpace}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Своб.место"/>
+                                    <TextBlock Text="{Binding FreeSpace}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Макс.пасажиров"/>
+                                    <TextBlock Text="{Binding MaxPassengers}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Тек.кол-во"/>
+                                    <TextBlock Text="{Binding CurrentPassengers}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Своб.места"/>
+                                    <TextBlock Text="{Binding FreePlaces}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Является электробусом"/>
+                                    <TextBlock Text="{Binding IsElectroBus}"/>
+                                </StackPanel>
+                        </StackPanel>
+                    </ItemContainerTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </GroupBox>
+    </DockPanel>
+</Window>
