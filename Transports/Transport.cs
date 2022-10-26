@@ -17,7 +17,7 @@ namespace Transports
             } 
         }
         public bool IsCrashed { get; set; }
-        protected bool IsWinterTires { get; set; }
+        protected bool IsWinterTires { get; set; }//Задуманная ошибка доступа
         public string Company { get; protected set; }
         public enum TransportControl
         {

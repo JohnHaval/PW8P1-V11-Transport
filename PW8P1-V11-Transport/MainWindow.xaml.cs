@@ -41,6 +41,7 @@ namespace PW8P1_V11_Transport
                 Transport.TransportControl.Impossible
             };
             ControlSelector.ItemsSource = transportControls;
+            ControlSelector.SelectedIndex = 0;
             List<Car.ComfortClass> carComforts = new List<Car.ComfortClass>()
             {
                 Car.ComfortClass.None,
@@ -48,12 +49,13 @@ namespace PW8P1_V11_Transport
                 Car.ComfortClass.Luxury
             };
             ComfortSelector.ItemsSource = carComforts;
+            ComfortSelector.SelectedIndex = 1;
         }
         private void AddTransport_Click(object sender, RoutedEventArgs e)
         {
             if (ComfortSelector.SelectedIndex == -1 || ControlSelector.SelectedIndex == -1)
                 MessageBox.Show("Выберите класс-комфорт и управляемость для авто перед добавлением!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-            GoCreating();
+            else GoCreating();
         }        
         private void GoCreating()
         {
@@ -89,9 +91,9 @@ namespace PW8P1_V11_Transport
                 transport.MaxSpeed = Convert.ToInt32(MaxSpeed.Text);
                 transport.Power = Convert.ToInt32(Power.Text);
                 transport.ChangeCompany(Company.Text);
+                transport.Control = MainCar.Control;
                 transport.IsCrashed = (bool)SetCrash.IsChecked;
                 transport.WinterTiresSetup((bool)SetWinterTires.IsChecked);
-                transport.Control = (Transport.TransportControl)ControlSelector.SelectedItem;
                 MainTranport = transport;
                 TransportList.Items.Add(transport);
             }
@@ -106,13 +108,12 @@ namespace PW8P1_V11_Transport
             { 
             car.MaxSpeed = Convert.ToInt32(MaxSpeed.Text);
             car.Power = Convert.ToInt32(Power.Text);
-            car.ChangeCompany(Company.Text);
-            car.IsCrashed = (bool)SetCrash.IsChecked;
+            car.ChangeCompany(Company.Text);            
             car.WinterTiresSetup((bool)SetWinterTires.IsChecked);
-            if (!car.IsCrashed)
+            if (!(bool)SetCrash.IsChecked)
             {
-                car.Control = (Transport.TransportControl)ControlSelector.SelectedItem;
-                car.Comfort = (Car.ComfortClass)ComfortSelector.SelectedItem;
+                car.Control = MainCar.Control;
+                car.Comfort = MainCar.Comfort;
                 car.OwnerSetup((bool)SetOwner.IsChecked);
             }
             else
@@ -135,9 +136,9 @@ namespace PW8P1_V11_Transport
             bus.MaxSpeed = Convert.ToInt32(MaxSpeed.Text);
             bus.Power = Convert.ToInt32(Power.Text);
             bus.ChangeCompany(Company.Text);
+            bus.Control = MainCar.Control;
             bus.IsCrashed = (bool)SetCrash.IsChecked;
             bus.WinterTiresSetup((bool)SetWinterTires.IsChecked);
-            bus.Control = (Transport.TransportControl)ControlSelector.SelectedItem;
             bus.MaxPassengers = Convert.ToInt32(MaxPassengers.Text);
             bus.ElectroBusSetup((bool)SetElectroBus.IsChecked);
             MainBus = bus;
@@ -155,9 +156,9 @@ namespace PW8P1_V11_Transport
             truck.MaxSpeed = Convert.ToInt32(MaxSpeed.Text);
             truck.Power = Convert.ToInt32(Power.Text);
             truck.ChangeCompany(Company.Text);
+            truck.Control = MainCar.Control;
             truck.IsCrashed = (bool)SetCrash.IsChecked;
             truck.WinterTiresSetup((bool)SetWinterTires.IsChecked);
-            truck.Control = (Transport.TransportControl)ControlSelector.SelectedItem;
             truck.MaxSpace = Convert.ToInt32(MaxPassengers.Text);
             MainTruck = truck;
             TransportList.Items.Add(truck);
@@ -193,7 +194,11 @@ namespace PW8P1_V11_Transport
         private void SetDeathCarSituation_Click(object sender, RoutedEventArgs e)
         {
             SetCrash.IsChecked = true;
-            MainCar.DeathCarSituation();
+            try
+            {
+                MainCar.DeathCarSituation();
+            }
+            catch { }
             SetOwner.IsChecked = MainCar.HasOwner;
             ControlSelector.SelectedItem = MainCar.Control;
             ComfortSelector.SelectedItem = MainCar.Comfort;
